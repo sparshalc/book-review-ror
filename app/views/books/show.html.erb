@@ -1,13 +1,27 @@
-<h2><%= @book.title %></h2>
-<h3><%= @book.author %></h3>
-<p><%= @book.description %></p>
+<style>
+.img {
+    position: absolute;
+    right: 250px;
+    top: 135px;
+}
+</style>
+<div class="jumbotron">
+      <% if @book.image.attached? %>
+       <div class="img">
+         <%= image_tag(@book.image,style: 'width: 180px') %>
+       </div>
+      <% else %>
+      <h2 class="lead", style="opacity: 0.4;">No Image Attached </h2>
+      <% end %>
+      <h2><%= @book.title.upcase! %></h2>
+      <h3><%= @book.author %></h3>
+</div>
 
-
-<%= link_to 'Back', books_path %>
+<%= link_to 'Back', books_path, class: 'btn btn-primary'  %>
 
 <% if user_signed_in? %>
  <% if current_user.id == @book.user_id %>
-    <%= link_to 'Edit', edit_book_path(@book) %>
-    <%= link_to 'Delete', book_path(@book), data: { turbo: "false" }, method: :delete, data: {turbo_confirm: 'You sure?'},data: {'turbo-method': :delete}%>
+    <%= link_to 'Edit', edit_book_path(@book), class: 'btn btn-primary' %>
+    <%= link_to 'Delete', book_path(@book), data: { turbo: "false" }, method: :delete, data: {turbo_confirm: 'You sure?'},data: {'turbo-method': :delete}, class: 'btn btn-danger' %>
  <%end %>
  <% end %>

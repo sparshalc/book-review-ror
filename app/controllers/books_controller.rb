@@ -1,9 +1,11 @@
 class BooksController < ApplicationController
-    before_action :find_book, only: [:show,:edit,:update,:destroy]
+    before_action :find_book, only: [:show,:edit,:update,:destroy, :index]
     before_action :authenticate_user!, only: [:edit,:update,:destroy, :new]
     before_action :correct_user!, only: [:edit,:update,:destroy]
+    BOOK_PER_PAGE = 6
     def index
-            @books = Book.all.order("created_at DESC")
+        @page = params.fetch(:page, 0).to_i
+        @books = Book.offset(@page*BOOK_PER_PAGE).limit(BOOK_PER_PAGE).order("Created_at DESC")
     end
  
     def show
@@ -39,7 +41,7 @@ class BooksController < ApplicationController
     end
     private
     def book_params
-        params.require(:book).permit(:title, :description, :author )
+        params.require(:book).permit(:title, :description, :author, :image )
     end
 
     def find_book

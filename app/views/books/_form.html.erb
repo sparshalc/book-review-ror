@@ -1,6 +1,8 @@
-<%= simple_form_for @book do |f| %>
- <%= f.input :title,label: 'Book Title here' %>
- <%= f.input :description,label: 'Book Description here' %>
- <%= f.input :author,label: 'Book Author' %>
+<%= simple_form_for @book, multipart: true do |f| %>
+<%= f.input :title,label: 'Book Title here' %>
+<%= f.input :author,label: 'Book Author' %>
+<br>
+<%= f.file_field :image, label: 'Your Image here' %>
+<br>
  <%= f.button :submit %>
 <% end %>
