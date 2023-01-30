@@ -19,6 +19,8 @@
           <h2><%= @book.title.upcase! %></h2>
           <h3><%= @book.author %></h3>
         </div>
+
+        <!-- EMAIL VIEWS & TIME -->
         <div class="text-center" style="opacity: 0.5;">
           <p><%= @book.user.email %>  |
           <%= "#{time_ago_in_words(@book.created_at)} ago"%>  |
@@ -27,7 +29,7 @@
           <% else %>
           <%= pluralize(@book.views, 'view') %></p>
           <% end %>
-        </div>
+      </div>
   </div>
 </div>  
 <div class="text-center">
