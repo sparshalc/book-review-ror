@@ -15,6 +15,13 @@
         
         
     }
+    .center{
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        margin: 10px;
+
+    }
 </style>
 <div class="text-center">
     <% @books.each do |book| %>
@@ -26,9 +33,42 @@
     <% end %>
 
     <br>
+    <% if @books.blank? %>
+    <% else %>
     <div class="text-center">
         <%= link_to 'Add Book', new_book_path, class:' btn btn-primary ' %>
     </div>
+    <% end %>
 </div>
+
+    <% if @page <= 0 %>
+        <div class="center">
+            <%= link_to 'Next Page', books_path(page: @page+1), class: 'btn btn-primary' %>
+        </div>
+    <% end %>
+    
+    <% if @books.blank?  %>
+        <h1 style="opacity: 1;", class="text-center text-danger">No book here!</h1>
+        <div class="center">
+            <%= link_to 'Previous Page', books_path(page: @page-1), class: 'btn btn-primary' %>
+        </div>
+    <% end %>
+    <% if @books.present? && @page != 0  && (@books).count == 6 %>
+     <div class="center">
+        <%= link_to 'Previous Page', books_path(page: @page-1), class: 'btn btn-primary' %>
+        <%= link_to 'Next Page', books_path(page: @page+1), class: 'btn btn-primary' %>
+    </div>
+    <% end %>
+    
+    <% if (@books).count <= 5%>
+     <div class="center">
+        <%= link_to 'Previous Page', books_path(page: @page-1), class: 'btn btn-primary' %>
+     </div>
+    <% end %>
+    
+
+
+    
+
 
 

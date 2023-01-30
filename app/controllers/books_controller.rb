@@ -17,7 +17,7 @@ class BooksController < ApplicationController
     def create
         @book = current_user.books.build(book_params)            
         if @book.save
-            redirect_to root_path
+            redirect_to root_path,notice: 'Book Added!'
         end
     end
     def edit
@@ -25,19 +25,19 @@ class BooksController < ApplicationController
 
     def update
         if @book.update(book_params)
-            redirect_to book_path(@book)
+            redirect_to book_path(@book),notice: 'Updated!'
         end
     end
 
     def destroy
         if @book.destroy
-            redirect_to root_path
+            redirect_to root_path, alert: 'Deleted!'
         end
     end
 
     def correct_user!
         @book = current_user.books.find_by(id: params[:id])
-        redirect_to root_path, notice: 'Not Authorized!' if @book.nil?
+        redirect_to root_path, alert: 'Not Authorized!' if @book.nil?
     end
     private
     def book_params
