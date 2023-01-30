@@ -6,6 +6,16 @@
   border:  4px solid black;
 }
 </style>
+<div class="text-center" style="opacity: 0.5;">
+  <p><%= @book.user.email %>  |
+  <%= "#{time_ago_in_words(@book.created_at)} ago"%>  |
+  <% if @book.views < 2 %>
+  No Views</p>
+  <% else %>
+  <%= pluralize(@book.views, 'view') %></p>
+  <% end %>
+</div>
+
 <div class="container a">
   <div class="jumbotron">
         <% if @book.image.attached? %>
@@ -18,29 +28,42 @@
         <div class="text-center">
           <h2><%= @book.title.upcase! %></h2>
           <h3><%= @book.author %></h3>
-        </div>
-
-        <!-- EMAIL VIEWS & TIME -->
-        <div class="text-center" style="opacity: 0.5;">
-          <p><%= @book.user.email %>  |
-          <%= "#{time_ago_in_words(@book.created_at)} ago"%>  |
-          <% if @book.views < 2 %>
-          No Views</p>
+          <% if @book.description.blank? %>
           <% else %>
-          <%= pluralize(@book.views, 'view') %></p>
+          <p style="opacity: 0.8;"><%= @book.description %></p>
           <% end %>
+        </div>
+<hr>
+      <div class="text-center">
+        <% if user_signed_in? %>
+          <% like = current_user.likes.find_by(book: @book) %>
+          <% if like.nil? %>
+        
+            <%= button_to 'like', likes_path, params: {like: {book_id: @book.id}},method: :post,class: 'btn btn-success btn-lg' %>
+          <% else %>
+            <%= button_to 'Unlike', like_path(like),method: :delete, data: {'turbo-method': :delete}, data: { turbo: "false" }, class: 'btn btn-danger btn-lg'  %>
+          <% end %>
+        <% end %>
+        <p><%= pluralize(@book.likes.count , 'like') %> </p>
       </div>
+      
   </div>
 </div>  
-<div class="text-center">
-  <%= link_to 'Back', books_path, class: 'btn btn-primary'  %>
-</div>
+
+
+
 
 <% if user_signed_in? %>
  <% if current_user.id == @book.user_id %>
  <div class="text-center"> <br>
+  <%= link_to 'Back', books_path, class: 'btn btn-primary'  %>
     <%= link_to 'Edit', edit_book_path(@book), class: 'btn btn-primary' %>
-    <%= link_to 'Delete', book_path(@book), data: { turbo: "false" }, method: :delete, data: {turbo_confirm: 'You sure?'},data: {'turbo-method': :delete}, class: 'btn btn-danger' %>
+    <%= link_to 'Delete', book_path(@book), method: :delete, data: {turbo_confirm: 'You sure?'}, data: {'turbo-method': :delete}, class: 'btn btn-danger' %>
   </div>
- <%end %>
+ <%else %>
+  <div class="text-center">
+    <%= link_to 'Back', books_path, class: 'btn btn-primary'  %>
+  </div>
  <% end %>
+ <% end %>
+
