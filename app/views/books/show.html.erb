@@ -21,7 +21,12 @@
         </div>
         <div class="text-center" style="opacity: 0.5;">
           <p><%= @book.user.email %>  |
-          <%= "#{time_ago_in_words(@book.created_at)} ago"%></p>
+          <%= "#{time_ago_in_words(@book.created_at)} ago"%>  |
+          <% if @book.views < 2 %>
+          No Views</p>
+          <% else %>
+          <%= pluralize(@book.views, 'view') %></p>
+          <% end %>
         </div>
   </div>
 </div>  

@@ -9,6 +9,7 @@ class BooksController < ApplicationController
     end
  
     def show
+        @book.update(views: @book.views + 1)
     end
     def new
         @book = current_user.books.build
@@ -52,3 +53,4 @@ class BooksController < ApplicationController
         @book = Book.find_by(id: params[:id])
     end
 end
+    
