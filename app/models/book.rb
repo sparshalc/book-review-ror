@@ -2,7 +2,9 @@ class Book < ApplicationRecord
     belongs_to :user
     has_one_attached :image
 
-    validates :title,:author,:image,presence: true
+    validates :title, presence: true
+    validates :author, presence: true
+    validates :image, presence: true
 end
 
 

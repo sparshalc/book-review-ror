@@ -2,12 +2,15 @@
 .img{
   text-align: center;
 }
+.hv:hover{
+  border:  4px solid black;
+}
 </style>
 <div class="container a">
   <div class="jumbotron">
         <% if @book.image.attached? %>
           <div class="img">
-            <%= image_tag(@book.image,style: 'width: 180px') %>
+            <%= image_tag(@book.image,style: 'width: 180px', class:'hv') %>
           </div>
         <% else %>
         <h2 class="lead", style="opacity: 0.4;">No Image Attached </h2>
@@ -15,6 +18,10 @@
         <div class="text-center">
           <h2><%= @book.title.upcase! %></h2>
           <h3><%= @book.author %></h3>
+        </div>
+        <div class="text-center" style="opacity: 0.5;">
+          <p><%= @book.user.email %>  |
+          <%= "#{time_ago_in_words(@book.created_at)} ago"%></p>
         </div>
   </div>
 </div>  

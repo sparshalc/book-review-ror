@@ -1,8 +1,21 @@
 <%= simple_form_for @book, multipart: true do |f| %>
+
 <%= f.input :title,label: 'Book Title here' %>
+
+
 <%= f.input :author,label: 'Book Author' %>
+
 <br>
 <%= f.file_field :image, label: 'Your Image here' %>
+<% if @book.errors.any? %>
+    <div class="text">
+        <% @book.errors.full_messages_for(:image).each do |message| %>
+         <div><%= message %></div>
+        <% end %>
+    </div>
+<% end %>
 <br>
  <%= f.button :submit %>
 <% end %>
+
+

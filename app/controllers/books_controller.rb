@@ -17,7 +17,9 @@ class BooksController < ApplicationController
     def create
         @book = current_user.books.build(book_params)            
         if @book.save
-            redirect_to root_path,notice: 'Book Added!'
+            redirect_to books_path,notice: 'Book Added!'
+        else
+            render :new , status: :unprocessable_entity
         end
     end
     def edit
@@ -26,12 +28,14 @@ class BooksController < ApplicationController
     def update
         if @book.update(book_params)
             redirect_to book_path(@book),notice: 'Updated!'
-        end
+        else
+            render :edit, status: :unprocessable_entity
+        end                                                 
     end
 
     def destroy
         if @book.destroy
-            redirect_to root_path, alert: 'Deleted!'
+            redirect_to books_path, alert: 'Deleted!'
         end
     end
 
