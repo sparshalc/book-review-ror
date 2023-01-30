@@ -35,9 +35,11 @@
     <br>
     <% if @books.blank? %>
     <% else %>
-    <div class="text-center">
-        <%= link_to 'Add Book', new_book_path, class:' btn btn-primary ' %>
-    </div>
+        <% if user_signed_in? %>
+            <div class="text-center">
+                <%= link_to 'Add Book', new_book_path, class:' btn btn-primary ' %>
+            </div>
+        <% end %>
     <% end %>
 </div>
 
