@@ -9,7 +9,7 @@ class BooksController < ApplicationController
     end
  
     def show
-        @book.update(views: @book.views + 1)
+        @book.update(views:@book.views + 1)
     end
     def new
         @book = current_user.books.build
